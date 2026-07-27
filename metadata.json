@@ -1,0 +1,6 @@
+{
+  "name": "Raceboy pistas de corrida em miniatura",
+  "description": "A mais tradicional fabricante de pistas e carros de corrida em miniatura do Brasil.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
