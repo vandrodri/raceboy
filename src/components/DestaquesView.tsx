@@ -2,11 +2,18 @@ import React from "react";
 import { motion } from "motion/react";
 import { Sparkles, Calendar, Zap, MessageSquare, Flame, Shield, Compass, ArrowRight, Play, Eye, Layers } from "lucide-react";
 import { showToast } from "../utils/toast";
+import { SiteConfig, formatYouTubeEmbedUrl } from "../types";
 
-export default function DestaquesView() {
+interface DestaquesViewProps {
+  siteConfig?: SiteConfig;
+}
+
+export default function DestaquesView({ siteConfig }: DestaquesViewProps) {
+  const raceenImg = siteConfig?.raceenImage || "https://i.postimg.cc/RhckBvw7/raceboy-raceen-2027.png";
+  const raceenVideo = formatYouTubeEmbedUrl(siteConfig?.raceenVideoUrl);
   const handleWhatsAppClick = () => {
     const text = encodeURIComponent(
-      "Olá! Vi o destaque da pista *Raceen Locação* no site e gostaria de solicitar mais informações e um orçamento."
+      "Olá! Vi o destaque da pista *Raceen* no site e gostaria de solicitar mais informações e um orçamento."
     );
     showToast("Solicitação enviada! Redirecionando para o WhatsApp...");
     window.open(`https://wa.me/5511994388829?text=${text}`, "_blank");
@@ -48,7 +55,7 @@ export default function DestaquesView() {
         </div>
       </div>
 
-      {/* Primary Highlight - Raceen Locação */}
+      {/* Primary Highlight - Raceen 2027 */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Column - Details & Specs */}
@@ -66,11 +73,11 @@ export default function DestaquesView() {
             </div>
 
             <h3 className="font-retro-title text-2xl sm:text-3xl text-zinc-100 uppercase tracking-wide leading-tight mb-4">
-              Pista Modelo <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink text-glow-blue">Raceen Locação</span>
+              Pista Modelo <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue to-neon-pink text-glow-blue">Raceen 2027</span>
             </h3>
 
             <p className="text-zinc-400 font-sans text-sm sm:text-base leading-relaxed mb-6">
-              Desenvolvida sob medida pela equipe RaceBoy, a <strong className="text-zinc-200">Raceen Locação</strong> é a melhor solução do mercado para locadores, buffets, salões de festas infantis e eventos corporativos. Com dimensões inteligentes e resistência extrema, ela cabe em qualquer lugar e garante diversão contínua.
+              Desenvolvida sob medida pela equipe RaceBoy, a <strong className="text-zinc-200">Raceen 2027</strong> é a melhor solução do mercado para locadores, buffets, salões de festas infantis e eventos corporativos. Com dimensões inteligentes e resistência extrema, ela cabe em qualquer lugar e garante diversão contínua.
             </p>
 
             {/* Main Features Grid */}
@@ -138,7 +145,7 @@ export default function DestaquesView() {
             <div className="bg-zinc-900/50 border border-zinc-800/60 p-5 rounded-xl border-l-4 border-l-neon-green">
               <h4 className="font-retro-title text-xs text-zinc-200 mb-1.5 uppercase">O Grande Diferencial de Vendas</h4>
               <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                Ideal para complementar pacotes de locação de brinquedos para festas de meninos e encontros familiares. Oferece uma atração nostálgica e ultra competitiva que se destaca de infláveis e fliperamas tradicionais, permitindo um excelente retorno sobre o investimento inicial.
+                Ideal para complementar pacotes de brinquedos para festas de meninos e encontros familiares. Oferece uma atração nostálgica e ultra competitiva que se destaca de infláveis e fliperamas tradicionais, permitindo um excelente retorno sobre o investimento inicial.
               </p>
             </div>
           </div>
@@ -153,12 +160,12 @@ export default function DestaquesView() {
               <Eye className="w-4 h-4 text-neon-pink" /> Demonstrativos do Modelo
             </h4>
 
-            {/* Placeholder Image */}
+            {/* Dynamic Image */}
             <div className="relative group rounded-xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-900">
               <img
-                src="https://images.unsplash.com/photo-1594787318286-3d835c1d207f?auto=format&fit=crop&w=800&q=80"
-                alt="Raceen Locação Placeholder"
-                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                src={raceenImg}
+                alt="Raceen 2026"
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                 style={{ 
                   transform: "translate3d(0, 0, 0) rotate(0.01deg)",
                   backfaceVisibility: "hidden",
@@ -167,22 +174,22 @@ export default function DestaquesView() {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute top-3 left-3 bg-black/80 border border-zinc-700/80 px-2 py-1 rounded text-[8px] font-retro-mono text-neon-pink uppercase">
-                FOTO DE PREVISÃO
+                FOTO RACEEN 2027
               </div>
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent p-3 pt-8">
                 <span className="font-retro-mono text-[9px] text-zinc-400 uppercase block tracking-wider">
-                  Sessão Técnica de Estúdio (Exemplo de Escala)
+                  Pista Raceen 2027
                 </span>
               </div>
             </div>
 
-            {/* Placeholder Video */}
+            {/* Dynamic Video */}
             <div className="flex flex-col gap-2">
               <div className="relative rounded-xl overflow-hidden border border-zinc-800 aspect-video bg-zinc-900 shadow-inner">
-                {/* Embedded YouTube video clip for premium presentation */}
+                {/* Embedded YouTube video clip */}
                 <iframe
                   className="w-full h-full"
-                  src="https://www.youtube.com/embed/u3895N3pP6w?autoplay=0&mute=1&loop=1&playlist=u3895N3pP6w"
+                  src={raceenVideo}
                   title="RaceBoy Slot Car Showcase"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -192,7 +199,7 @@ export default function DestaquesView() {
                 </div>
               </div>
               <span className="text-[10px] font-retro-mono text-zinc-500 uppercase text-center mt-1">
-                *Vídeo ilustrativo de autorama profissional RaceBoy
+                *Vídeo de apresentação oficial RaceBoy
               </span>
             </div>
 
@@ -215,7 +222,7 @@ export default function DestaquesView() {
             </span>
             <div className="flex justify-between border-b border-zinc-900 pb-1.5">
               <span>NOME DO PROJETO:</span>
-              <span className="text-zinc-300">RACEEN LOCAÇÃO (ED. LIMITADA)</span>
+              <span className="text-zinc-300">RACEEN 2027 (ED. LIMITADA)</span>
             </div>
             <div className="flex justify-between border-b border-zinc-900 pb-1.5">
               <span>CUMPRIMENTO X LARGURA:</span>
@@ -258,7 +265,7 @@ export default function DestaquesView() {
             </h3>
 
             <p className="text-zinc-300 font-sans text-xs sm:text-sm leading-relaxed max-w-3xl">
-              Atendendo a pedidos de clientes e projetos de alto padrão arquitetônico, a RaceBoy produz a estrutura de sustentação, elevações, viadutos e base das pistas em <strong className="text-amber-300">Madeira Laminada Colada (MLC / Glulam)</strong>. Essa tecnologia une lâminas selecionadas com resinas industriais de altíssima resistência sob pressão.
+              Atendendo a pedidos de clientes e projetos de alto padrão arquitetônico, a RaceBoy produz a estrutura de sustentação, elevações e base das pistas em <strong className="text-amber-300">Madeira Laminada Colada (MLC / Glulam)</strong>. Essa tecnologia une lâminas selecionadas com resinas industriais de altíssima resistência sob pressão.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">

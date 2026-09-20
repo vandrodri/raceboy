@@ -39,31 +39,31 @@ const QUALITY_BADGES: BadgeItem[] = [
   },
   {
     id: "iso-9001",
-    title: "Certificado ISO 9001",
+    title: "Fornecedores Certificados ISO 9001",
     subtitle: "Padrão Industrial de Qualidade",
-    description: "Corte CNC computadorizado de altíssima precisão e acabamento impecável em MDF naval especial.",
+    description: "Corte CNC computadorizado de altíssima precisão e acabamento impecável em MDF, WFP ou PVB.",
     icon: <Award className="w-6 h-6 text-neon-pink" />,
     tag: "ISO QUALITY",
     colorClass: "border-neon-pink/40 hover:border-neon-pink shadow-[0_0_15px_rgba(255,0,127,0.15)]",
     badgeBg: "bg-neon-pink/10 text-neon-pink border-neon-pink/30"
   },
   {
-    id: "garantia-5-anos",
-    title: "Garantia de 5 Anos",
+    id: "garantia-2-anos",
+    title: "Garantia de 2 Anos",
     subtitle: "Cobertura Total RaceBoy",
-    description: "Garantia estendida de 5 anos cobrindo estrutura em MDF naval, alinhamento CNC, cordoalhas e encaixes modulares.",
+    description: "Garantia estendida de 2 anos cobrindo estrutura e acessórios, alinhamento CNC, cordoalhas e encaixes modulares.",
     icon: <ShieldCheck className="w-6 h-6 text-amber-400" />,
-    tag: "5 ANOS GARANTIA",
+    tag: "2 ANOS GARANTIA",
     colorClass: "border-amber-400/50 hover:border-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.2)]",
     badgeBg: "bg-amber-400/15 text-amber-400 border-amber-400/40"
   },
   {
-    id: "federacao-autorama",
+    id: "federacao-braslot",
     title: "Membro da Federação",
-    subtitle: "Federação Brasileira de Autorama",
+    subtitle: "Federação Brasileira Braslot",
     description: "Geometria de curvas, espaçamento entre fendas e raio de inclinação aprovados para campeonatos oficiais.",
     icon: <BadgeCheck className="w-6 h-6 text-neon-blue" />,
-    tag: "FEDERAÇÃO CBT",
+    tag: "FEDERAÇÃO BRASLOT",
     colorClass: "border-neon-blue/40 hover:border-neon-blue shadow-[0_0_15px_rgba(0,240,255,0.15)]",
     badgeBg: "bg-neon-blue/10 text-neon-blue border-neon-blue/30"
   },
@@ -88,8 +88,8 @@ const QUALITY_BADGES: BadgeItem[] = [
     badgeBg: "bg-purple-400/10 text-purple-400 border-purple-400/30"
   },
   {
-    id: "suporte-vitalicio",
-    title: "Assistência Vitalícia",
+    id: "suporte-t´cnico",
+    title: "Assistência em todo o Brasil",
     subtitle: "Suporte Direto com Projetista",
     description: "Atendimento pós-venda permanente para expansões de módulos, manutenção e upgrades do circuito.",
     icon: <Layers className="w-6 h-6 text-cyan-400" />,
@@ -117,7 +117,7 @@ export default function QualityBadges() {
               <Sparkles className="w-3.5 h-3.5" /> CERTIFICAÇÕES DE EXCELÊNCIA & CONFIANÇA
             </div>
             <h3 className="font-retro-title text-lg sm:text-xl text-zinc-100 tracking-wide uppercase">
-              SELOS DE QUALIDADE RACEBOY
+              QUALIDADE RACEBOY
             </h3>
             <p className="text-xs font-retro-mono text-zinc-500 mt-1 uppercase tracking-wider">
               Qualidade industrial e compromisso técnico em cada centímetro de pista fabricada

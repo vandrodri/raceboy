@@ -39,9 +39,9 @@ const DEFAULT_PHOTOS: HistoryPhoto[] = [
   {
     id: "h1",
     title: "Campeonato Paulista de Slot Car 1994",
-    description: "Competidores concentrados durante as finais do torneio paulista. Pista usinada RaceBoy com telemetria analógica de primeira geração.",
+    description: "Competidores concentrados durante as finais do torneio paulista. Pista Monza com telemetria analógica de primeira geração.",
     category: "eventos",
-    imageUrl: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/05Z9Xb1T/campeonato-brasileiro-de-slotcar-1-993-raceboy.webp",
     year: "1994",
     location: "São Paulo, SP"
   },
@@ -50,43 +50,43 @@ const DEFAULT_PHOTOS: HistoryPhoto[] = [
     title: "Circuito Particular de Alta Velocidade",
     description: "Pista residencial sob medida com acabamento emborrachado preto de altíssima tração montada na sala de jogos de colecionador.",
     category: "particulares",
-    imageUrl: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/Kz6CqNKV/raceboy-rally-plus6-3.jpg",
     year: "2018",
     location: "Curitiba, PR"
   },
   {
     id: "h3",
     title: "Arena Speed Comercial",
-    description: "Inauguração da pista gigante de 8 fendas em shopping center paulistano. Sucesso absoluto de público e bilheteria.",
+    description: "Inauguração da pista gigante em shopping center paulistano. Sucesso absoluto de público e bilheteria.",
     category: "comerciais",
-    imageUrl: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/13KP8LgW/raceboy-shopping-lapa-sp.png",
     year: "2011",
     location: "Shopping Ibirapuera, SP"
   },
   {
     id: "h4",
     title: "Fundação da Primeira Oficina",
-    description: "O início de tudo em 1991. Engenhosidade e paixão por autorama que deram origem ao padrão de usinagem mais respeitado do Brasil.",
+    description: "O início de tudo em 1991. Engenhosidade e paixão que deram origem ao padrão de usinagem mais respeitado do Brasil.",
     category: "momentos",
-    imageUrl: "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/4x5hNXDx/raceboy-tunel.jpg",
     year: "1991",
-    location: "São Bernardo do Campo, SP"
+    location: "São Caetano do Sul, SP"
   },
   {
     id: "h5",
-    title: "Grande Prêmio de Endurance 12h",
-    description: "A eletrizante corrida de 12 horas seguidas. Teste supremo de durabilidade para os motores, cordoalhas e fontes RaceBoy.",
+    title: "Raceboy Ferrari Santender",
+    description: "Teste supremo da qualidade e durabilidade para os motores, cordoalhas e fontes RaceBoy.",
     category: "eventos",
-    imageUrl: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/7YpNT1Ys/santander-ferrari.jpg",
     year: "2005",
     location: "Interlagos, SP"
   },
   {
     id: "h6",
     title: "Pista Modular Compacta Residencial",
-    description: "Modelo compacto de encaixe por cavilhas entregue em apartamento. Diversão em escala sem ocupar espaço definitivo.",
+    description: "Modelo compacto de encaixe macho-fêmea para apartamentos. Diversão em escala sem ocupar espaço definitivo.",
     category: "particulares",
-    imageUrl: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?auto=format&fit=crop&w=800&q=80",
+    imageUrl: "https://i.postimg.cc/PxYMyPVt/raceboy-home-set.webp",
     year: "2023",
     location: "Rio de Janeiro, RJ"
   }
@@ -116,8 +116,8 @@ export default function HistoriaView() {
   // Load photos in real-time from Firestore, seeding with defaults if empty
   useEffect(() => {
     // Check if user is already logged in as admin in this session
-    const adminSession = sessionStorage.getItem("raceboy_admin_logged");
-    if (adminSession === "true") {
+    const adminSession = sessionStorage.getItem("raceboy_admin_logged") === "true" || sessionStorage.getItem("raceboy_admin_auth") === "true";
+    if (adminSession) {
       setIsAdmin(true);
     }
 
@@ -190,14 +190,16 @@ export default function HistoriaView() {
   // Handle simple login
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === "raceboy35") {
+    if (password === "raceboy35" || password === "1991") {
       setIsAdmin(true);
       sessionStorage.setItem("raceboy_admin_logged", "true");
+      sessionStorage.setItem("raceboy_admin_auth", "true");
       setLoginError("");
       setPassword("");
       setShowLoginModal(false);
+      showToast("Acesso Autorizado como Administrador!");
     } else {
-      setLoginError("Senha incorreta. Tente 'raceboy35'!");
+      setLoginError("Senha incorreta. Tente 'raceboy35' ou '1991'!");
     }
   };
 

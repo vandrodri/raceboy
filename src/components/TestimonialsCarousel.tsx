@@ -40,7 +40,7 @@ const TESTIMONIALS: Testimonial[] = [
     quote: "A RaceBoy realizou um sonho de infância! Pedi uma pista de 4 fendas sob medida para a minha sala de jogos. A precisão do corte CNC no MDF e o grip da pintura texturizada são impressionantes! Os carros não desaceleram e o sistema de telemetria digital funciona com precisão absoluta.",
     badge: "Cliente Verificado • Residencial",
     year: "Cliente desde 2023",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://i.postimg.cc/hv3sZ43D/039d9ca0-5d23-447b-a122-08d5da73a5c2.jpg",
     glowColor: "border-neon-pink/40 shadow-[0_0_20px_rgba(255,0,127,0.15)]",
     badgeBg: "bg-neon-pink/10 border-neon-pink/30 text-neon-pink"
   },
@@ -53,7 +53,7 @@ const TESTIMONIALS: Testimonial[] = [
     quote: "Montamos a pista no nosso espaço de entretenimento e hobbymodelismo. A estrutura RaceBoy suporta campeonatos inteiros com dezenas de pilotos correndo sem esquentar a cordoalha nem falhar contato. O suporte e a atenção do projetista Vanderlei são nota mil!",
     badge: "Cliente Verificado • Comercial",
     year: "Cliente desde 2021",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://i.postimg.cc/C5KJ4nJn/0cf18d8a-c3f1-4607-997d-591139d17602.jpg",
     glowColor: "border-neon-blue/40 shadow-[0_0_20px_rgba(0,240,255,0.15)]",
     badgeBg: "bg-neon-blue/10 border-neon-blue/30 text-neon-blue"
   },
@@ -66,7 +66,7 @@ const TESTIMONIALS: Testimonial[] = [
     quote: "Comprei a pista para reunir os filhos e netos nos finais de semana. A facilidade de montagem dos módulos e a estabilidade das fontes reguladas independentes por fenda garantem corridas muito equilibradas. Diversão saudável de verdade para toda a família!",
     badge: "Cliente Verificado • Família",
     year: "Cliente desde 2024",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://i.postimg.cc/GtpzjTz8/3d3856af-3b9a-41d3-b934-26d0726233cd.jpg",
     glowColor: "border-neon-green/40 shadow-[0_0_20px_rgba(57,255,20,0.15)]",
     badgeBg: "bg-neon-green/10 border-neon-green/30 text-neon-green"
   },
@@ -79,7 +79,7 @@ const TESTIMONIALS: Testimonial[] = [
     quote: "Sou colecionador de slotcars clássicos há 30 anos. A suavidade das fendas esculpidas pela RaceBoy preserva meus carrinhos mais raros sem arranhar nem trancar a guia. É visível o cuidado artesanal combinado com usinagem moderna.",
     badge: "Colecionador • 30 anos de Hobby",
     year: "Cliente desde 2022",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://i.postimg.cc/90f1Bw1q/67e161f1-aea0-48f5-ad1a-f4bb64205e0f.jpg",
     glowColor: "border-amber-400/40 shadow-[0_0_20px_rgba(251,191,36,0.15)]",
     badgeBg: "bg-amber-400/10 border-amber-400/30 text-amber-400"
   },
@@ -89,10 +89,10 @@ const TESTIMONIALS: Testimonial[] = [
     location: "Porto Alegre, RS",
     projectType: "Circuito Oficial 8 Fendas de Competição",
     stars: 5,
-    quote: "Já sediamos duas etapas do Campeonato de Autorama nesta pista. A fiação elétrica reforçada por fenda e o balanço ideal nas curvas com inclinação perfeita fizeram toda a diferença nos recordes de volta. Disparada a melhor fabricante do Brasil!",
+    quote: "Já sediamos duas etapas do Campeonato nesta pista. A fiação elétrica reforçada por fenda e o balanço ideal nas curvas com inclinação perfeita fizeram toda a diferença nos recordes de volta. Disparada a melhor fabricante do Brasil!",
     badge: "Clube Oficial • Torneios",
     year: "Cliente desde 2020",
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://i.postimg.cc/SRtd1Qt2/d537808d-3d56-4731-8acf-9f6280e7e51e.jpg",
     glowColor: "border-neon-pink/40 shadow-[0_0_20px_rgba(255,0,127,0.15)]",
     badgeBg: "bg-neon-pink/10 border-neon-pink/30 text-neon-pink"
   }

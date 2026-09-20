@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Zap, Radio, ChevronRight, HelpCircle, Trophy, Sparkles, MapPin, Phone, Github, Award, Flame, Timer, Facebook, X, Sun, Moon, Camera, Box } from "lucide-react";
+import { Zap, Radio, ChevronRight, HelpCircle, Trophy, Sparkles, MapPin, Phone, Github, Award, Flame, Timer, Facebook, X, Sun, Moon, Camera, Box, Lock } from "lucide-react";
 import SlotSimulator from "./components/SlotSimulator";
 import TrackPlanner from "./components/TrackPlanner";
 import DestaquesView from "./components/DestaquesView";
@@ -8,67 +8,10 @@ import HistoriaView from "./components/HistoriaView";
 import TestimonialsCarousel from "./components/TestimonialsCarousel";
 import QualityBadges from "./components/QualityBadges";
 import ArViewerModal from "./components/ArViewerModal";
+import AdminDashboardModal from "./components/AdminDashboardModal";
 import { showToast } from "./utils/toast";
-
-interface GalleryItem {
-  id: number;
-  title: string;
-  client: string;
-  specs: string;
-  image: string;
-  glowClass: string;
-}
-
-const GALLERY_ITEMS: GalleryItem[] = [
-  {
-    id: 1,
-    title: "MÁXIMO DETALHE",
-    client: "Carlos M. (PR)",
-    specs: "PROJETO: CUSTOM SPA | 6 FENDAS",
-    image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-pink hover:shadow-[0_0_20px_rgba(255,0,127,0.4)]"
-  },
-  {
-    id: 2,
-    title: "SÉRIE NOTURNA",
-    client: "Julio C. (SP)",
-    specs: "SÉRIE ESPECIAL LEDS | 4 FENDAS",
-    image: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-blue hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
-  },
-  {
-    id: 3,
-    title: "TRAÇÃO ABSOLUTA",
-    client: "Renato G. (RS)",
-    specs: "REVESTIMENTO EMBORRACHADO | 2 FENDAS",
-    image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-red hover:shadow-[0_0_20px_rgba(255,30,39,0.4)]"
-  },
-  {
-    id: 4,
-    title: "CONTROLE INTEGRADO",
-    client: "Marcelo A. (RJ)",
-    specs: "PAINEL RACEBOY | TELEMETRIA",
-    image: "https://images.unsplash.com/photo-1616788494707-ec28f08d05a1?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-green hover:shadow-[0_0_20px_rgba(57,255,20,0.4)]"
-  },
-  {
-    id: 5,
-    title: "TRAÇADO ELETRÔNICO",
-    client: "Fabricio S. (MG)",
-    specs: "PROJETO COMPACTO RESIDENCIAL",
-    image: "https://images.unsplash.com/photo-1508974239320-0a029497e820?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-yellow hover:shadow-[0_0_20px_rgba(255,240,31,0.4)]"
-  },
-  {
-    id: 6,
-    title: "ESCALA DE PRECISÃO",
-    client: "Bruno K. (SC)",
-    specs: "PISTA DE RALLY | CURVAS COMPENSADAS",
-    image: "https://images.unsplash.com/photo-1581235720704-06d3acfcb36f?auto=format&fit=crop&w=800&q=80",
-    glowClass: "border-glow-pink hover:shadow-[0_0_20px_rgba(255,0,127,0.4)]"
-  }
-];
+import { GalleryItem, SiteConfig, DEFAULT_GALLERY_ITEMS, DEFAULT_SITE_CONFIG } from "./types";
+import { subscribeGallery, subscribeSiteConfig } from "./firebase";
 
 interface FaqItem {
   question: string;
@@ -86,7 +29,7 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     question: "Quais fendas e carros são compatíveis com as pistas Raceboy?",
-    answer: "Nossas pistas profissionais e residenciais de madeira aceitam todos os guias padrão de réplicas de autorama e slot car das principais marcas do mercado nacional e internacional (escalas 1:32, 1:24 e 1:43). Nossas fendas têm profundidade e largura perfeitas para garantir transições suaves em curvas fechadas."
+    answer: "Nossas pistas profissionais e residenciais de madeira aceitam todos os guias padrão de miniaturas de carros e slot car das principais marcas do mercado nacional e internacional (escalas 1:32, 1:24 e 1:43). Nossas fendas têm profundidade e largura perfeitas para garantir transições suaves em curvas fechadas."
   },
   {
     question: "Como é o processo de faturamento, prazo de entrega e frete?",
@@ -106,10 +49,35 @@ export default function App() {
   const [bootState, setBootState] = useState<"frozen" | "booting" | "active">("frozen");
   const [glitchText, setGlitchText] = useState("1.991");
   const [bootLogIndex, setBootLogIndex] = useState(0);
+
+  // Firestore Realtime State
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(DEFAULT_GALLERY_ITEMS);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+  const [isAdminOpen, setIsAdminOpen] = useState<boolean>(false);
+
   const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
   const [arItem, setArItem] = useState<GalleryItem | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeView, setActiveView] = useState<"home" | "destaques" | "historia">("home");
+
+  useEffect(() => {
+    const unsubGallery = subscribeGallery((items) => {
+      if (items && items.length > 0) {
+        setGalleryItems(items);
+      }
+    });
+
+    const unsubConfig = subscribeSiteConfig((config) => {
+      if (config) {
+        setSiteConfig(config);
+      }
+    });
+
+    return () => {
+      unsubGallery();
+      unsubConfig();
+    };
+  }, []);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     try {
       return (localStorage.getItem("raceboy_theme") as "dark" | "light") || "dark";
@@ -374,8 +342,18 @@ export default function App() {
             <header className="border-b border-zinc-800/80 bg-black/80 backdrop-blur-md sticky top-0 z-30">
               <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center bg-zinc-950/60 border border-zinc-800/80 px-4 py-2 rounded-xl box-glow-pink">
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center bg-zinc-950/60 border border-zinc-800/80 px-3 py-1.5 rounded-xl box-glow-pink gap-2 sm:gap-3">
+                    <img
+                      src={siteConfig.mascotImage || "https://i.postimg.cc/MGgBg9kP/raceboy-mascote-transp-web-252px.webp"}
+                      alt="RaceBoy Mascote"
+                      className="h-9 w-auto object-contain cursor-pointer transition-transform hover:scale-105"
+                      onClick={() => setActiveView("home")}
+                      style={{
+                        filter: "drop-shadow(0 0 6px rgba(255, 30, 39, 0.4))",
+                      }}
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="flex items-center gap-3 border-l border-zinc-800 pl-2 sm:pl-3">
                       <img 
                         src="https://i.postimg.cc/FsVm3y64/raceboy-logo-transp-870px.png" 
                         alt="RaceBoy Logo" 
@@ -451,6 +429,16 @@ export default function App() {
                     <span>BI-CAMPEÃO BRASIL</span>
                   </div>
 
+                  {/* Painel Admin Button */}
+                  <button
+                    onClick={() => setIsAdminOpen(true)}
+                    className="flex items-center gap-1.5 bg-zinc-900 border border-amber-500/40 px-3 py-1.5 rounded-lg text-amber-400 hover:text-white hover:border-amber-400 hover:bg-amber-400/10 transition-all font-retro-tech text-[9px] tracking-wider cursor-pointer shadow-[0_0_10px_rgba(251,191,36,0.15)]"
+                    title="Painel Administrativo para Gerenciar Fotos"
+                  >
+                    <Lock className="w-3 h-3 text-amber-400" />
+                    <span>PAINEL ADMIN</span>
+                  </button>
+
                   {/* Daylight/Prototyping Theme Toggle */}
                   <button
                     onClick={toggleTheme}
@@ -511,12 +499,12 @@ export default function App() {
                     </span>
                   </div>
 
-                  <h1 className="font-retro-title text-4xl sm:text-6xl text-zinc-100 tracking-tight leading-tight max-w-4xl">
-                    As Pistas de SlotCar Mais <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red via-red-500 to-amber-500 text-glow-red">Lendárias do Brasil</span>
+                  <h1 className="font-retro-title text-3xl sm:text-5xl lg:text-6xl text-zinc-100 tracking-tight leading-tight max-w-4xl">
+                    Raceboy Slotcar: Pistas de Carrinhos e <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red via-red-500 to-amber-500 text-glow-red">Mesas de Carros de Corrida</span>
                   </h1>
 
                   <p className="text-zinc-400 font-sans text-sm sm:text-base max-w-2xl leading-relaxed">
-                    Fabricamos pistas profissionais de corrida em miniatura esculpidas sob medida em CNC. Acabamento perfeito com piso emborrachado de alta tração, telemetria digital integrada de milissegundos (opcional) e fiação isolada para máxima velocidade e performance.
+                    Fabricamos a melhor <strong className="text-zinc-200 font-semibold">pista e carrinhos de slot car</strong> e <strong className="text-zinc-200 font-semibold">mesa de carros de corrida</strong> do Brasil. Projetos de alta performance esculpidos sob medida em madeira CNC para <strong className="text-zinc-200 font-semibold">miniaturas de carros</strong> e slot car, com acabamento texturizado e telemetria digital.
                   </p>
                 </div>
                 <div className="lg:col-span-4 flex justify-center items-center">
@@ -530,7 +518,7 @@ export default function App() {
                     <div className="absolute inset-0 bg-gradient-to-r from-neon-red/20 to-amber-500/10 rounded-full blur-2xl group-hover:from-neon-red/30 group-hover:to-amber-500/20 transition-all duration-500 scale-95 pointer-events-none" />
                     
                     <motion.img 
-                      src="https://i.postimg.cc/Wb5P8pXb/raceboy-mascote-transp-webp868px.webp" 
+                      src={siteConfig.mascotImage || "https://i.postimg.cc/MGgBg9kP/raceboy-mascote-transp-web-252px.webp"} 
                       alt="RaceBoy Mascot" 
                       className="w-44 sm:w-56 lg:w-64 object-contain"
                       style={{ 
@@ -640,6 +628,46 @@ export default function App() {
                 </div>
               </section>
 
+              {/* SEO Context Banner */}
+              <section className="mt-16 border-t border-zinc-800/60 pt-12 max-w-5xl mx-auto w-full">
+                <div className="bg-zinc-950/80 border border-zinc-800/80 rounded-2xl p-6 sm:p-8 backdrop-blur-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-neon-red/5 rounded-full blur-3xl pointer-events-none" />
+                  
+                  <div className="flex flex-col gap-4">
+                    <div className="inline-flex items-center gap-2 text-[10px] font-retro-mono text-amber-400 bg-amber-400/10 border border-amber-400/30 px-3 py-1 rounded-full w-fit uppercase tracking-widest">
+                      <Sparkles className="w-3.5 h-3.5" /> ESPECIALISTA EM PISTAS DE CORRIDA EM MINIATURA
+                    </div>
+
+                    <h2 className="font-retro-title text-xl sm:text-2xl text-zinc-100 tracking-wide">
+                      RACEBOY: A MAIOR FABRICANTE DE PISTA DE CARRINHOS E MESA DE CARROS DE CORRIDA DO BRASIL
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-sans text-zinc-400 leading-relaxed mt-2">
+                      <div className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/60 flex flex-col gap-2">
+                        <h3 className="font-retro-title text-sm text-neon-pink">PISTA DE CARRINHOS CNC</h3>
+                        <p>
+                          Projetadas e usinadas em madeira de alta densidade por router CNC de precisão milimétrica. Superfície com pintura texturizada emborrachada para tração perfeita e alta aderência.
+                        </p>
+                      </div>
+
+                      <div className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/60 flex flex-col gap-2">
+                        <h3 className="font-retro-title text-sm text-neon-blue">MESA DE CARROS DE CORRIDA</h3>
+                        <p>
+                          Estruturas residenciais e comerciais sob medida em módulos autoportantes ou Madeira Laminada Colada (MLC). Opções dobráveis ou fixas com iluminação em LED e telemetria digital.
+                        </p>
+                      </div>
+
+                      <div className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-800/60 flex flex-col gap-2">
+                        <h3 className="font-retro-title text-sm text-amber-400">MINIATURES & SLOT CAR</h3>
+                        <p>
+                          Compatíveis com todas as marcas e escalas de miniaturas de carros (1:32, 1:24 e 1:43). Fendas com cordoalha trançada em cobre para condução elétrica sem oscilação.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
               {/* FAQ Section */}
               <section id="faq-root" className="mt-16 border-t border-zinc-800/60 pt-12 max-w-4xl mx-auto w-full">
                 <div className="text-center mb-10">
@@ -714,12 +742,12 @@ export default function App() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {GALLERY_ITEMS.map((item) => (
+                  {galleryItems.map((item, idx) => (
                     <motion.div
-                      key={item.id}
+                      key={item.id || idx}
                       whileHover={{ scale: 1.02 }}
                       onClick={() => setSelectedImage(item)}
-                      className={`cursor-pointer bg-zinc-950 border rounded-xl overflow-hidden group transition-all duration-300 ${item.glowClass}`}
+                      className={`cursor-pointer bg-zinc-950 border rounded-xl overflow-hidden group transition-all duration-300 ${item.glowClass || "border-glow-pink hover:shadow-[0_0_20px_rgba(255,0,127,0.4)]"}`}
                     >
                       <div className="relative aspect-video overflow-hidden">
                         {/* Shimmer overlay or hover color */}
@@ -737,6 +765,10 @@ export default function App() {
                           alt={item.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                           referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src =
+                              "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=800&q=80";
+                          }}
                         />
                       </div>
                       <div className="p-4 border-t border-zinc-900 bg-zinc-950 flex flex-col justify-between">
@@ -746,7 +778,7 @@ export default function App() {
                               {item.title}
                             </h4>
                             <span className="text-[10px] font-retro-mono text-zinc-500 uppercase">
-                              #{String(item.id).padStart(3, "0")}
+                              #{String(idx + 1).padStart(3, "0")}
                             </span>
                           </div>
                           <p className="text-[11px] font-retro-mono text-zinc-400">
@@ -778,7 +810,7 @@ export default function App() {
               <TestimonialsCarousel />
                 </>
               ) : activeView === "destaques" ? (
-                <DestaquesView />
+                <DestaquesView siteConfig={siteConfig} />
               ) : (
                 <HistoriaView />
               )}
@@ -791,6 +823,15 @@ export default function App() {
             <footer className="mt-12 border-t border-zinc-900 bg-zinc-950 py-8 text-xs text-zinc-600 font-retro-mono">
               <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-3">
+                  <img 
+                    src={siteConfig.mascotImage || "https://i.postimg.cc/MGgBg9kP/raceboy-mascote-transp-web-252px.webp"} 
+                    alt="RaceBoy Mascote" 
+                    className="h-8 w-auto object-contain"
+                    style={{ 
+                      filter: "drop-shadow(0 0 5px rgba(255,30,39,0.3))",
+                    }}
+                    referrerPolicy="no-referrer"
+                  />
                   <img 
                     src="https://i.postimg.cc/FsVm3y64/raceboy-logo-transp-870px.png" 
                     alt="RaceBoy Logo" 
@@ -805,7 +846,7 @@ export default function App() {
                   />
                   <p className="text-left text-[11px] leading-snug">
                     © {new Date().getFullYear()} RACEBOY.<br />
-                    <span className="text-zinc-500 font-sans text-[10px]">A mais tradicional fabricante de pistas de slot car do Brasil.</span>
+                    <span className="text-zinc-500 font-sans text-[10px]">A mais tradicional fabricante de pista de carrinhos, mesa de carros de corrida e slot car do Brasil.</span>
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 justify-center md:justify-end">
@@ -814,6 +855,10 @@ export default function App() {
                   <button onClick={() => navigateToSection("track-planner-root")} className="hover:text-neon-blue transition-all cursor-pointer">PROJETAR PISTA</button>
                   <span>•</span>
                   <button onClick={() => navigateToSection("gallery-root")} className="hover:text-neon-yellow transition-all cursor-pointer">GALERIA</button>
+                  <span>•</span>
+                  <button onClick={() => setIsAdminOpen(true)} className="hover:text-amber-400 font-bold transition-all cursor-pointer flex items-center gap-1 text-amber-400">
+                    <Lock className="w-3 h-3" /> PAINEL ADMIN
+                  </button>
                   <span>•</span>
                   <button onClick={() => navigateToSection("testimonials-root")} className="hover:text-amber-400 transition-all cursor-pointer uppercase">DEPOIMENTOS</button>
                   <span>•</span>
@@ -924,6 +969,14 @@ export default function App() {
                 />
               )}
             </AnimatePresence>
+
+            {/* Admin Dashboard Modal */}
+            <AdminDashboardModal
+              isOpen={isAdminOpen}
+              onClose={() => setIsAdminOpen(false)}
+              galleryItems={galleryItems}
+              siteConfig={siteConfig}
+            />
 
             {/* Global Retro Toast System */}
             <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full">

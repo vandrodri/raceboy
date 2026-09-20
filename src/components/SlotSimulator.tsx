@@ -144,7 +144,21 @@ export default function SlotCarSimulator() {
 
   // Keyboard controls for throttle (Spacebar or Up Arrow)
   useEffect(() => {
+    const isTypingInInput = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return false;
+      const tagName = target.tagName;
+      return (
+        tagName === "INPUT" ||
+        tagName === "TEXTAREA" ||
+        tagName === "SELECT" ||
+        target.isContentEditable
+      );
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isTypingInInput(e)) return;
+
       if (e.code === "Space" || e.code === "ArrowUp") {
         e.preventDefault();
         setIsPressing(true);
@@ -153,6 +167,8 @@ export default function SlotCarSimulator() {
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
+      if (isTypingInInput(e)) return;
+
       if (e.code === "Space" || e.code === "ArrowUp") {
         e.preventDefault();
         setIsPressing(false);

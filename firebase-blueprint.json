@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "galleryItem": {
+      "title": "Gallery Item",
+      "description": "Photo and specifications for a RaceBoy slot car track project in the gallery",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Title of the project, e.g. MÁXIMO DETALHE",
+          "maxLength": 100
+        },
+        "client": {
+          "type": "string",
+          "description": "Client name and location, e.g. Carlos M. (PR)",
+          "maxLength": 100
+        },
+        "specs": {
+          "type": "string",
+          "description": "Technical specifications, e.g. PROJETO: CUSTOM SPA | 6 FENDAS",
+          "maxLength": 150
+        },
+        "image": {
+          "type": "string",
+          "description": "Direct image URL of the track project",
+          "maxLength": 1000
+        },
+        "glowClass": {
+          "type": "string",
+          "description": "CSS glow style class",
+          "maxLength": 100
+        },
+        "order": {
+          "type": "number",
+          "description": "Sorting order"
+        }
+      },
+      "required": ["title", "client", "specs", "image"]
+    },
+    "siteConfig": {
+      "title": "Site Configuration",
+      "description": "General site media configuration including hero images and featured highlights",
+      "type": "object",
+      "properties": {
+        "raceenImage": {
+          "type": "string",
+          "description": "Image URL for the Raceen Locação featured project",
+          "maxLength": 1000
+        },
+        "raceenVideoUrl": {
+          "type": "string",
+          "description": "YouTube or video embed URL for Raceen featured project",
+          "maxLength": 1000
+        },
+        "mascotImage": {
+          "type": "string",
+          "description": "Mascot image URL",
+          "maxLength": 1000
+        },
+        "logoImage": {
+          "type": "string",
+          "description": "Logo image URL",
+          "maxLength": 1000
+        },
+        "adminPin": {
+          "type": "string",
+          "description": "Admin access PIN",
+          "maxLength": 50
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/gallery/{itemId}": {
+      "schema": {
+        "$ref": "#/entities/galleryItem"
+      },
+      "description": "Collection of gallery photo items"
+    },
+    "/siteConfig/{configId}": {
+      "schema": {
+        "$ref": "#/entities/siteConfig"
+      },
+      "description": "Site global configuration document"
+    }
+  }
+}
