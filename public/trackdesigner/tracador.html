@@ -607,56 +607,6 @@
     .hint, .mascot{ display:none; }
   }
   
-/* =========================================================
-   TOQUE (celular): 1 dedo arrasta, 2 dedos fazem zoom
-   ========================================================= */
-stage.style.touchAction = "none";
-let touchMode = null, touchStart = null, lastDist = 0, lastMid = null;
-
-function touchDist(t){ return Math.hypot(t[0].clientX-t[1].clientX, t[0].clientY-t[1].clientY); }
-function touchMid(t){ return { x:(t[0].clientX+t[1].clientX)/2, y:(t[0].clientY+t[1].clientY)/2 }; }
-
-stage.addEventListener("touchstart", (e) => {
-  if(e.touches.length === 1){
-    touchMode = "pan";
-    touchStart = { x:e.touches[0].clientX, y:e.touches[0].clientY, panX, panY };
-  } else if(e.touches.length === 2){
-    touchMode = "pinch";
-    lastDist = touchDist(e.touches);
-    lastMid = touchMid(e.touches);
-  }
-}, { passive:true });
-
-stage.addEventListener("touchmove", (e) => {
-  if(!touchMode) return;
-  e.preventDefault();
-  if(touchMode === "pan" && e.touches.length === 1){
-    panX = touchStart.panX + (e.touches[0].clientX - touchStart.x);
-    panY = touchStart.panY + (e.touches[0].clientY - touchStart.y);
-  } else if(touchMode === "pinch" && e.touches.length === 2){
-    const rect = stage.getBoundingClientRect();
-    const dist = touchDist(e.touches);
-    const mid = touchMid(e.touches);
-    const worldX = (lastMid.x - rect.left - panX) / zoom;
-    const worldY = (lastMid.y - rect.top - panY) / zoom;
-    zoom = Math.max(0.05, Math.min(zoom * (dist / lastDist), 10));
-    panX = (mid.x - rect.left) - worldX * zoom;
-    panY = (mid.y - rect.top) - worldY * zoom;
-    lastDist = dist;
-    lastMid = mid;
-  }
-  userAdjustedView = true;
-  applyTransform();
-}, { passive:false });
-
-stage.addEventListener("touchend", (e) => {
-  if(e.touches.length === 1){
-    touchMode = "pan";
-    touchStart = { x:e.touches[0].clientX, y:e.touches[0].clientY, panX, panY };
-  } else if(e.touches.length === 0){
-    touchMode = null;
-  }
-}, { passive:true });
 </style>
 </head>
 <body>
@@ -1686,6 +1636,56 @@ window.addEventListener("mousemove", (e) => {
 });
 window.addEventListener("mouseup", () => { isPanning=false; stage.classList.remove("panning"); });
 window.addEventListener("resize", () => { if(!userAdjustedView) fitToView(); });
+/* =========================================================
+   TOQUE (celular): 1 dedo arrasta, 2 dedos fazem zoom
+   ========================================================= */
+stage.style.touchAction = "none";
+let touchMode = null, touchStart = null, lastDist = 0, lastMid = null;
+
+function touchDist(t){ return Math.hypot(t[0].clientX-t[1].clientX, t[0].clientY-t[1].clientY); }
+function touchMid(t){ return { x:(t[0].clientX+t[1].clientX)/2, y:(t[0].clientY+t[1].clientY)/2 }; }
+
+stage.addEventListener("touchstart", (e) => {
+  if(e.touches.length === 1){
+    touchMode = "pan";
+    touchStart = { x:e.touches[0].clientX, y:e.touches[0].clientY, panX, panY };
+  } else if(e.touches.length === 2){
+    touchMode = "pinch";
+    lastDist = touchDist(e.touches);
+    lastMid = touchMid(e.touches);
+  }
+}, { passive:true });
+
+stage.addEventListener("touchmove", (e) => {
+  if(!touchMode) return;
+  e.preventDefault();
+  if(touchMode === "pan" && e.touches.length === 1){
+    panX = touchStart.panX + (e.touches[0].clientX - touchStart.x);
+    panY = touchStart.panY + (e.touches[0].clientY - touchStart.y);
+  } else if(touchMode === "pinch" && e.touches.length === 2){
+    const rect = stage.getBoundingClientRect();
+    const dist = touchDist(e.touches);
+    const mid = touchMid(e.touches);
+    const worldX = (lastMid.x - rect.left - panX) / zoom;
+    const worldY = (lastMid.y - rect.top - panY) / zoom;
+    zoom = Math.max(0.05, Math.min(zoom * (dist / lastDist), 10));
+    panX = (mid.x - rect.left) - worldX * zoom;
+    panY = (mid.y - rect.top) - worldY * zoom;
+    lastDist = dist;
+    lastMid = mid;
+  }
+  userAdjustedView = true;
+  applyTransform();
+}, { passive:false });
+
+stage.addEventListener("touchend", (e) => {
+  if(e.touches.length === 1){
+    touchMode = "pan";
+    touchStart = { x:e.touches[0].clientX, y:e.touches[0].clientY, panX, panY };
+  } else if(e.touches.length === 0){
+    touchMode = null;
+  }
+}, { passive:true });
 
 /* =========================================================
    SIDEBAR
