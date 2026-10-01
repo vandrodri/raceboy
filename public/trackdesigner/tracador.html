@@ -585,28 +585,51 @@
   }
   .modal-card{ position:relative; }
 
-  /* ---------- CELULAR: empilha os painéis ---------- */
+    /* ---------- CELULAR: desenho em tela cheia, peças em faixa ---------- */
   @media (max-width: 800px){
-    html, body{ height:auto; }
-    body{ display:block; overflow-y:auto; overflow-x:hidden; }
-    header{ padding:8px 12px; gap:10px; }
-    .brand-mark img.logo{ height:26px; }
-    h1{ font-size:15px; }
-    .app{ display:flex; flex-direction:column; }
-    .canvas-wrap{ order:1; flex:none; height:65vh; min-height:340px; }
-    #palettePanel{ order:2; overflow:visible; border-right:none; border-top:1px solid var(--border); }
-    .panel.right{ order:3; overflow:visible; border-left:none; border-top:1px solid var(--border); }
-    .piece-grid{ flex-direction:row; flex-wrap:wrap; }
-    .piece-btn{ flex:1 1 45%; }
+    html, body{ height:100%; overflow:hidden; }
+    body{ display:flex; flex-direction:column; overflow:hidden; }
+    header{ padding:6px 10px; gap:8px; flex-wrap:nowrap; }
+    .brand-mark .eyebrow, .spacer, #viewToggle{ display:none; }
+    .brand-mark img.logo{ height:22px; }
+    h1{ font-size:13px; line-height:1.1; }
+    .track-tabs button{ padding:6px 10px; font-size:12px; }
+    #laneToggle button{ padding:6px 8px; }
+
+    .app{ flex:1; display:flex; flex-direction:column; min-height:0; }
+    .canvas-wrap{ order:1; flex:1; min-height:0; }
+    #palettePanel{
+      order:2; flex:none;
+      height:112px;
+      overflow-x:auto; overflow-y:hidden;
+      border-right:none; border-top:2px solid var(--accent);
+      padding:8px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .panel.right{ display:none; }
+    footer{ display:none; }
+
+    #laneNote{ display:none; }
+    #palettePanel h2{ display:none; }
+    #palettePanel .custom-box{ display:none; }
+    #palettePanel .piece-grid{ flex-direction:row; flex-wrap:nowrap; gap:8px; }
+    #palettePanel .piece-grid + .piece-grid{ margin-left:12px; padding-left:12px; border-left:1px solid var(--border); }
+    #palettePanel{ display:flex; flex-direction:row; align-items:stretch; }
+    .piece-btn{
+      flex:none; width:104px;
+      flex-direction:column; justify-content:center; text-align:center;
+      padding:8px 6px; font-size:12px; gap:4px;
+    }
+    .piece-btn .spec{ font-size:11px; }
+
     .canvas-toolbar{ top:8px; left:8px; right:8px; flex-wrap:wrap; }
-    .canvas-toolbar button{ padding:6px 8px; font-size:11px; }
+    .canvas-toolbar button{ padding:9px 11px; font-size:12px; }
     .status-badge{ top:auto; bottom:8px; right:8px; font-size:11px; padding:6px 10px; }
     .status-badge.collision{ top:auto; bottom:44px; }
     .magnet-btn{ top:auto; bottom:80px; right:8px; }
     .magnet-toast{ bottom:56px; max-width:92%; }
     .hint, .mascot{ display:none; }
   }
-  
 </style>
 </head>
 <body>
