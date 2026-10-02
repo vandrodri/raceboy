@@ -243,6 +243,7 @@
     backdrop-filter:blur(2px);
   }
   .canvas-toolbar button:hover{ border-color:var(--accent-2); }
+    .canvas-toolbar .sm, .canvas-toolbar .zoom-btn{ display:none; }
   .status-badge{
     position:absolute;
     top:12px;
@@ -623,7 +624,11 @@
     .piece-btn .spec{ font-size:11px; }
 
     .canvas-toolbar{ top:8px; left:8px; right:8px; flex-wrap:wrap; }
-    .canvas-toolbar button{ padding:9px 11px; font-size:12px; }
+        .canvas-toolbar{ gap:6px; }
+    .canvas-toolbar button{ padding:0 12px; min-height:44px; font-size:13px; }
+    .canvas-toolbar .lg{ display:none; }
+    .canvas-toolbar .sm{ display:inline; }
+    .canvas-toolbar .zoom-btn{ display:inline-block; min-width:44px; font-size:20px; font-weight:700; padding:0; }
     .status-badge{ top:auto; bottom:8px; right:8px; font-size:11px; padding:6px 10px; }
     .status-badge.collision{ top:auto; bottom:44px; }
     .magnet-btn{ top:auto; bottom:80px; right:8px; }
@@ -686,11 +691,13 @@
 
   <!-- CANVAS -->
   <div class="canvas-wrap" id="canvasWrap">
-    <div class="canvas-toolbar">
-      <button onclick="undoLast()">↶ Desfazer</button>
-      <button onclick="flipLast()">⇋ Inverter última curva</button>
-      <button onclick="fitToView()">⤢ Ajustar à tela</button>
-      <button onclick="clearAll()">🗑 Limpar</button>
+        <div class="canvas-toolbar">
+      <button onclick="undoLast()">↶ <span class="lg">Desfazer</span><span class="sm">Voltar</span></button>
+      <button onclick="flipLast()">⇋ <span class="lg">Inverter última curva</span><span class="sm">Curva</span></button>
+      <button onclick="fitToView()">⤢ <span class="lg">Ajustar à tela</span><span class="sm">Ajustar</span></button>
+      <button class="zoom-btn" onclick="zoomBy(1.4)" aria-label="Aumentar zoom">＋</button>
+      <button class="zoom-btn" onclick="zoomBy(1/1.4)" aria-label="Diminuir zoom">－</button>
+      <button onclick="clearAll()">🗑 <span class="lg">Limpar</span><span class="sm">Limpar</span></button>
     </div>
     <div class="status-badge" id="statusBadge">—</div>
     <div class="status-badge collision" id="collisionBadge">—</div>
@@ -1628,6 +1635,16 @@ function fitToView(bboxArg, mark){
   applyTransform();
 }
 
+function zoomBy(factor){
+  const rect = document.getElementById("stage").getBoundingClientRect();
+  const mx = rect.width/2, my = rect.height/2;
+  const worldX = (mx-panX)/zoom, worldY = (my-panY)/zoom;
+  zoom = Math.max(0.05, Math.min(zoom*factor, 10));
+  panX = mx - worldX*zoom;
+  panY = my - worldY*zoom;
+  userAdjustedView = true;
+  applyTransform();
+}
 /* pan / zoom interações */
 const canvasWrap = document.getElementById("canvasWrap");
 const stage = document.getElementById("stage");
