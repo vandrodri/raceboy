@@ -244,6 +244,7 @@
   }
   .canvas-toolbar button:hover{ border-color:var(--accent-2); }
       .canvas-toolbar .sm{ display:none; }
+      .quote-fab, .drawer-close{ display:none; }
   .canvas-toolbar .zoom-btn{ display:none; }
   .canvas-toolbar .clear-btn{ display:inline-block; }
   .status-badge{
@@ -609,7 +610,27 @@
       padding:8px;
       -webkit-overflow-scrolling:touch;
     }
-    .panel.right{ display:none; }
+        .panel.right{
+      display:block; position:fixed; left:0; right:0; bottom:0;
+      height:85%; z-index:40; overflow-y:auto;
+      border-left:none; border-top:2px solid var(--accent);
+      border-radius:14px 14px 0 0;
+      transform:translateY(105%); transition:transform .25s ease;
+      padding-bottom:40px; -webkit-overflow-scrolling:touch;
+    }
+    .panel.right.open{ transform:translateY(0); }
+    .drawer-close{
+      display:block; width:100%; min-height:44px; margin-bottom:10px;
+      background:var(--bg-panel-alt2); color:var(--ink);
+      border:1px solid var(--border); border-radius:8px;
+      font-size:14px; font-weight:600;
+    }
+    .quote-fab{
+      display:block; position:fixed; right:10px; bottom:124px; z-index:30;
+      min-height:44px; padding:0 16px; border:none; border-radius:999px;
+      background:var(--accent); color:#1A0D06; font-weight:700; font-size:13px;
+      box-shadow:0 4px 14px rgba(0,0,0,.45);
+    }
     footer{ display:none; }
 
     #laneNote{ display:none; }
@@ -715,7 +736,9 @@
   </div>
 
   <!-- RIGHT / CUT LIST -->
+     <button class="quote-fab" id="quoteFab" onclick="toggleDrawer(true)">📩 Orçamento · <span id="fabPrice">—</span></button>
   <div class="panel right">
+    <button class="drawer-close" onclick="toggleDrawer(false)">✕ Fechar</button>
     <h2>Resumo do traçado</h2>
     <div class="stat-row"><span class="k">Peças no total</span><span class="v" id="statCount">0</span></div>
     <div class="stat-row"><span class="k">Comprimento aprox. da pista</span><span class="v" id="statLength">0 mm</span></div>
@@ -1637,6 +1660,9 @@ function fitToView(bboxArg, mark){
   applyTransform();
 }
 
+function toggleDrawer(open){
+  document.querySelector(".panel.right").classList.toggle("open", open);
+}
 function zoomBy(factor){
   const rect = document.getElementById("stage").getBoundingClientRect();
   const mx = rect.width/2, my = rect.height/2;
@@ -1798,6 +1824,7 @@ function updateSidebar(segs, closed, gap, angleDiff, conflictCount){
   // preço
   const pricing = calcPricing(chain, neededSheets);
   document.getElementById("priceTotal").textContent = chain.length ? formatBRL(pricing.total) : "—";
+    document.getElementById("fabPrice").textContent = chain.length ? formatBRL(pricing.total) : "monte a pista";
   const totalLenM = totalLen/1000;
   const perMeter = (chain.length && totalLenM > 0) ? pricing.price / totalLenM : 0;
   document.getElementById("pricePerMeter").textContent = (chain.length && totalLenM > 0) ? formatBRL(perMeter) + "/m" : "—";
