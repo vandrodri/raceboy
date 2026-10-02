@@ -1622,7 +1622,7 @@ function fitToView(bboxArg, mark){
   const w = Math.max(bbox.maxX-bbox.minX, 50), h = Math.max(bbox.maxY-bbox.minY, 50);
    const isMobile = window.innerWidth <= 800;
   const margin = isMobile ? 24 : 90;
-  const topSpace = isMobile ? 64 : margin;
+  const topSpace = isMobile ? 84 : margin;
   const bottomSpace = isMobile ? 56 : margin;
   const scaleX = (rect.width - margin*2) / w;
   const scaleY = (rect.height - topSpace - bottomSpace) / h;
