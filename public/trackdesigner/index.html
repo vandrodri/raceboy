@@ -2,7 +2,7 @@
 <html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />S
     <title>Raceboy – Desenhe a Pista de Slot Car que Você Sempre Imaginou</title>
     <meta
       name="description"
@@ -54,6 +54,26 @@
   </head>
   <body class="bg-[#0e1117] text-zinc-100 font-sans antialiased selection:bg-amber-500 selection:text-black">
     <div id="root"></div>
+        <style>
+      .rb-fab-wrap{ display:none; }
+      @media (max-width: 800px){
+        .rb-fab-wrap{
+          display:flex; gap:8px; position:fixed; left:10px; right:10px; bottom:10px; z-index:9999;
+        }
+        .rb-fab{
+          flex:1; min-height:48px; border-radius:999px; border:none;
+          font:700 14px/1 system-ui,sans-serif; text-decoration:none;
+          display:flex; align-items:center; justify-content:center;
+          box-shadow:0 4px 14px rgba(0,0,0,.5);
+        }
+        .rb-fab.full{ background:#E8622C; color:#1A0D06; }
+        .rb-fab.wa{ background:#25D366; color:#06210f; }
+      }
+    </style>
+    <div class="rb-fab-wrap">
+      <a class="rb-fab full" href="/trackdesigner/tracador.html">⛶ Tela cheia</a>
+      <a class="rb-fab wa" href="https://wa.me/5511994388829?text=Ol%C3%A1!%20Vi%20o%20tra%C3%A7ador%20de%20pista%20no%20site%20da%20RaceBoy%20e%20quero%20um%20or%C3%A7amento." target="_blank" rel="noopener">💬 WhatsApp</a>
+    </div>
   </body>
 </html>
 
