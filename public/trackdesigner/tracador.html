@@ -243,7 +243,9 @@
     backdrop-filter:blur(2px);
   }
   .canvas-toolbar button:hover{ border-color:var(--accent-2); }
-    .canvas-toolbar .sm, .canvas-toolbar .zoom-btn{ display:none; }
+      .canvas-toolbar .sm{ display:none; }
+  .canvas-toolbar .zoom-btn{ display:none; }
+  .canvas-toolbar .clear-btn{ display:inline-block; }
   .status-badge{
     position:absolute;
     top:12px;
@@ -697,7 +699,7 @@
       <button onclick="fitToView()">⤢ <span class="lg">Ajustar à tela</span><span class="sm">Ajustar</span></button>
       <button class="zoom-btn" onclick="zoomBy(1.4)" aria-label="Aumentar zoom">＋</button>
       <button class="zoom-btn" onclick="zoomBy(1/1.4)" aria-label="Diminuir zoom">－</button>
-      <button onclick="clearAll()">🗑 <span class="lg">Limpar</span><span class="sm">Limpar</span></button>
+      <button class="zoom-btn clear-btn" onclick="clearAll()" aria-label="Limpar tudo">🗑 <span class="lg">Limpar</span></button>
     </div>
     <div class="status-badge" id="statusBadge">—</div>
     <div class="status-badge collision" id="collisionBadge">—</div>
