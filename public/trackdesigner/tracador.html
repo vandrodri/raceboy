@@ -1003,7 +1003,6 @@ document.getElementById("viewToggle").addEventListener("click", (e) => {
    ========================================================= */
 function addPiece(def){
   chain.push(Object.assign({ uid: uidCounter++ }, def));
-  userAdjustedView = false;
   render();
 }
 
@@ -1171,7 +1170,6 @@ function magneticClose(){
     return;
   }
   pieces.forEach(p => chain.push(Object.assign({ uid: uidCounter++ }, p)));
-  userAdjustedView = false;
   render();
 }
 
