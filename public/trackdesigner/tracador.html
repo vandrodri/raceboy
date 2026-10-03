@@ -736,7 +736,7 @@
   </div>
 
   <!-- RIGHT / CUT LIST -->
-     <button class="quote-fab" id="quoteFab" onclick="toggleDrawer(true)">📩 Orçamento · <span id="fabPrice">—</span></button>
+  <button class="quote-fab" id="quoteFab" onclick="toggleDrawer(true)">📩 Solicitar orçamento<span id="fabPrice"></span></button>
   <div class="panel right">
     <button class="drawer-close" onclick="toggleDrawer(false)">✕ Fechar</button>
     <h2>Resumo do traçado</h2>
@@ -747,14 +747,7 @@
 
     <h2>Orçamento do circuito</h2>
     <div class="checkbox-row">
-      <input type="checkbox" id="accessoriesCheck" onchange="render()"> incluir carrinhos e controles (2 carros + 2 controles) — +R$ 780,00
-    </div>
-    <div class="price-box">
-      <div class="price-row total"><span class="k">Valor do orçamento</span><span class="v" id="priceTotal">—</span></div>
-      <div class="price-row" style="border-top:1px dashed var(--border); margin-top:4px; padding-top:7px;"><span class="k">Valor por metro linear</span><span class="v" id="pricePerMeter">—</span></div>
-    </div>
-    <div style="font-size:10px; color:var(--ink-faint); line-height:1.4; margin-top:5px;">
-      R$/m é só referência (não vale de fórmula fixa) — o custo é dominado pelo <b>nº de peças</b>, não pelo comprimento. Traçados com mais curvas custam mais por metro que traçados retos do mesmo tamanho. Não inclui acessórios.
+      <input type="checkbox" id="accessoriesCheck" onchange="render()"> incluir carrinhos e controles (2 carros + 2 controles)
     </div>
 
     <h2>Lista de corte</h2>
@@ -770,7 +763,7 @@
 
     <div class="footnote">
       Medidas baseadas em dados públicos de fabricantes/lojas e podem variar entre gerações de peças. <b>Confirme com paquímetro nas suas peças físicas (ou use "peça personalizada") antes de fechar o pedido.</b><br><br>
-      O orçamento aqui é uma estimativa automática. Ao clicar em "Solicitar orçamento", enviamos seu projeto pra gente e confirmamos o valor final e o prazo com você pelo WhatsApp.
+      Ao clicar em "Solicitar orçamento", enviamos seu projeto pra gente e conversamos pelo WhatsApp para confirmar os detalhes do projeto, o valor e o prazo com você.
     </div>
   </div>
 
@@ -802,10 +795,6 @@
       <div><p class="lbl">Chapas MDF</p><p class="val" id="modalChapas">0</p></div>
     </div>
 
-    <div class="modal-price">
-      <span class="lbl">Orçamento estimado</span>
-      <span class="val" id="modalPreco">R$ 0</span>
-    </div>
 
     <input class="modal-field" id="leadNome" type="text" placeholder="Seu nome">
     <input class="modal-field" id="leadWhats" type="tel" placeholder="WhatsApp com DDD">
@@ -1823,11 +1812,9 @@ function updateSidebar(segs, closed, gap, angleDiff, conflictCount){
 
   // preço
   const pricing = calcPricing(chain, neededSheets);
-  document.getElementById("priceTotal").textContent = chain.length ? formatBRL(pricing.total) : "—";
-    document.getElementById("fabPrice").textContent = chain.length ? formatBRL(pricing.total) : "monte a pista";
+  document.getElementById("fabPrice").textContent = "";
   const totalLenM = totalLen/1000;
   const perMeter = (chain.length && totalLenM > 0) ? pricing.price / totalLenM : 0;
-  document.getElementById("pricePerMeter").textContent = (chain.length && totalLenM > 0) ? formatBRL(perMeter) + "/m" : "—";
 
   lastComputed = { nPecas: chain.length, totalLenM, nChapas: neededSheets, pricing };
 
@@ -1878,7 +1865,8 @@ function handoffProject(){
   saveProject();
   const nome = (document.getElementById("leadNome").value || "").trim();
   const linha1 = nome ? `Olá, meu nome é ${nome}!` : "Olá!";
-  const resumo = `${linha1} Desenhei uma pista no traçador RaceBoy e quero orçamento:%0A- Peças: ${lastComputed.nPecas}%0A- Comprimento: ${lastComputed.totalLenM.toFixed(2)}m%0A- Chapas MDF: ${lastComputed.nChapas}%0A- Orçamento estimado: ${lastComputed.pricing?formatBRL(lastComputed.pricing.total):''}%0A%0AVou anexar aqui o arquivo do projeto que acabei de baixar 📎`;
+  const querAcess = document.getElementById("accessoriesCheck") && document.getElementById("accessoriesCheck").checked;
+  const resumo = `${linha1} Desenhei uma pista no traçador RaceBoy e quero orçamento:%0A- Peças: ${lastComputed.nPecas}%0A- Comprimento: ${lastComputed.totalLenM.toFixed(2)}m%0A- Chapas MDF: ${lastComputed.nChapas}%0A- Quero carrinhos e controles: ${querAcess ? "sim" : "não"}%0A%0AVou anexar aqui o arquivo do projeto que acabei de baixar 📎`;
   window.open(`https://wa.me/5511994388829?text=${resumo}`, "_blank");
 }
 
@@ -1886,7 +1874,6 @@ function openLeadModal(){
   document.getElementById("modalPecas").textContent = lastComputed.nPecas;
   document.getElementById("modalComprimento").textContent = lastComputed.totalLenM.toFixed(2) + " m";
   document.getElementById("modalChapas").textContent = lastComputed.nChapas;
-  document.getElementById("modalPreco").textContent = lastComputed.pricing ? formatBRL(lastComputed.pricing.total) : "—";
   document.getElementById("leadModal").classList.remove("hidden");
 }
 
