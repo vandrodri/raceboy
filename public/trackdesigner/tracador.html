@@ -1814,7 +1814,7 @@ function updateSidebar(segs, closed, gap, angleDiff, conflictCount){
   window.lastConflictCount = conflictCount || 0;
   const collisionBadge = document.getElementById("collisionBadge");
   if(conflictCount > 0){
-    collisionBadge.style.display = "block";
+    collisionBadge.style.display = "none";
     collisionBadge.textContent = `⚠ ${conflictCount} peça${conflictCount>1?'s':''} se sobrepõe${conflictCount>1?'m':''}`;
     collisionBadge.title = "Essas peças (destacadas em vermelho na pista) ocupam o mesmo espaço físico — provavelmente um trecho do traçado cruza sobre outro. Ajuste antes de exportar, ou vai gerar corte errado.";
   } else {
@@ -1855,14 +1855,6 @@ function updateSidebar(segs, closed, gap, angleDiff, conflictCount){
    ========================================================= */
 function requestExport(type){
   if(!chain.length){ alert("Monte um traçado antes de exportar."); return; }
-  if(window.lastConflictCount > 0){
-    const ok = confirm(
-      `⚠ ${window.lastConflictCount} peça(s) estão se sobrepondo fisicamente nesse traçado (destacadas em vermelho na tela).\n\n` +
-      `Isso normalmente acontece quando um trecho do circuito cruza por cima de outro (ex: um laço sem peça de viaduto) — a pista, montada de verdade no chão, não vai fechar como está desenhada. Isso não afeta o corte (cada peça é cortada separadamente), mas vale revisar o traçado antes de mandar cortar.\n\n` +
-      `Exportar mesmo assim?`
-    );
-    if(!ok) return;
-  }
   if(leadCaptured){ doExport(type); return; }
   pendingExportType = type;
   openLeadModal();
@@ -1873,14 +1865,6 @@ function requestExport(type){
 // de colisão e o mesmo modal de captura de lead que já existiam.
 function requestQuote(){
   if(!chain.length){ alert("Monte um traçado antes de solicitar o orçamento."); return; }
-  if(window.lastConflictCount > 0){
-    const ok = confirm(
-      `⚠ ${window.lastConflictCount} peça(s) estão se sobrepondo fisicamente nesse traçado (destacadas em vermelho na tela).\n\n` +
-      `Isso normalmente acontece quando um trecho do circuito cruza por cima de outro (ex: um laço sem peça de viaduto) — a pista, montada de verdade no chão, não vai fechar como está desenhada. Vale revisar antes de enviar, mas se preferir, a gente também pode te ajudar a ajustar.\n\n` +
-      `Enviar mesmo assim?`
-    );
-    if(!ok) return;
-  }
   if(leadCaptured){ handoffProject(); return; }
   pendingExportType = "send";
   openLeadModal();
