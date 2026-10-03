@@ -1996,7 +1996,11 @@ ${paths}</g>
    ========================================================= */
 function saveProject(){
   const data = JSON.stringify({ brand:currentBrand, chain }, null, 2);
-  downloadBlob(data, `projeto-pista-${currentBrand}.json`, "application/json");
+  const campo = document.getElementById("leadNome");
+  const bruto = campo ? campo.value.trim().split(/\s+/)[0] : "";
+  const primeiroNome = bruto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  const sufixo = primeiroNome ? `-${primeiroNome}` : "";
+  downloadBlob(data, `projeto-pista-${currentBrand}${sufixo}.json`, "application/json");
 }
 
 // Garante que toda peça tenha width/slots/lanes corretos, mesmo se vier
