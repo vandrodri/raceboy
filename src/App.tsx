@@ -429,15 +429,6 @@ export default function App() {
                     <span>BI-CAMPEÃO BRASIL</span>
                   </div>
 
-                  {/* Painel Admin Button */}
-                  <button
-                    onClick={() => setIsAdminOpen(true)}
-                    className="flex items-center gap-1.5 bg-zinc-900 border border-amber-500/40 px-3 py-1.5 rounded-lg text-amber-400 hover:text-white hover:border-amber-400 hover:bg-amber-400/10 transition-all font-retro-tech text-[9px] tracking-wider cursor-pointer shadow-[0_0_10px_rgba(251,191,36,0.15)]"
-                    title="Painel Administrativo para Gerenciar Fotos"
-                  >
-                    <Lock className="w-3 h-3 text-amber-400" />
-                    <span>PAINEL ADMIN</span>
-                  </button>
 
                   {/* Daylight/Prototyping Theme Toggle */}
                   <button
@@ -482,6 +473,30 @@ export default function App() {
                 </div>
               </div>
             </header>
+                  {/* Banner do Traçador */}
+      <section id="banner-tracador" className="relative overflow-hidden border-b border-neon-pink/30 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950">
+        <div className="max-w-7xl mx-auto px-4 py-5 sm:py-6 flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-3 min-w-0">
+            <span className="text-[10px] sm:text-xs font-retro-mono uppercase tracking-widest text-neon-pink">
+              Traçador Raceboy
+            </span>
+            <h2 className="font-retro-title text-xl sm:text-3xl text-white uppercase leading-tight">
+              Desenhe a pista dos seus sonhos no Traçador Raceboy
+            </h2>
+            <a
+              href="/trackdesigner"
+              className="self-start inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-neon-pink text-white font-bold text-sm shadow-lg shadow-neon-pink/30 hover:brightness-110 transition-all"
+            >
+              Desenhar minha pista →
+            </a>
+          </div>
+          <img
+            src="/mascote-raceboy-348-px.png"
+            alt="Mascote Raceboy"
+            className="h-20 sm:h-32 w-auto shrink-0 object-contain"
+          />
+        </div>
+      </section>
 
             {/* Main Interactive Hero Container */}
             <main className="flex-grow flex flex-col justify-center max-w-7xl mx-auto px-4 py-8 md:py-12 w-full gap-12 z-10">
