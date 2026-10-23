@@ -473,9 +473,9 @@ export default function App() {
                 </div>
               </div>
             </header>
-                  {/* Banner do Traçador */}
+      {/* Banner do Traçador */}
       <section id="banner-tracador" className="relative overflow-hidden border-b border-neon-pink/30 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 py-5 sm:py-6 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-5 sm:py-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
           <div className="flex flex-col gap-3 min-w-0">
             <span className="text-[10px] sm:text-xs font-retro-mono uppercase tracking-widest text-neon-pink">
               Traçador Raceboy
@@ -490,14 +490,16 @@ export default function App() {
               Desenhar minha pista →
             </a>
           </div>
-          <img
-            src="/mascote-raceboy-348-px.png"
-            alt="Mascote Raceboy"
-            className="h-20 sm:h-32 w-auto shrink-0 object-contain"
-          />
+          <a href="/trackdesigner" className="block w-full sm:w-[420px] shrink-0">
+            <img
+              src="/raceboy-tracador-app-600px.png"
+              alt="Tela do Traçador Raceboy"
+              className="w-full h-auto rounded-xl border border-neon-pink/30 shadow-lg shadow-black/50"
+            />
+          </a>
         </div>
       </section>
-
+      
             {/* Main Interactive Hero Container */}
             <main className="flex-grow flex flex-col justify-center max-w-7xl mx-auto px-4 py-8 md:py-12 w-full gap-12 z-10">
               {activeView === "home" ? (
