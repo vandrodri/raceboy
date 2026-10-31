@@ -270,7 +270,7 @@ export default function TrackPlanner() {
           {/* Quote CTA */}
           <div className="mt-6 pt-4 border-t border-zinc-800/80">
             <a
-              href={`https://wa.me/5511994388829?text=${encodeURIComponent(`Olá RaceBoy! Fiz um projeto de pista customizada no configurador com as especificações:\n- Fendas: ${lanes}\n- Traçado: ${shape.toUpperCase()}\n- Acabamento: ${finish.toUpperCase()}\n- Telemetria v4.0: ${addons.telemetry ? "Sim" : "Não"}\n- Faróis LED: ${addons.leds ? "Sim" : "Não"}\n- Fontes Individuais: ${addons.power ? "Sim" : "Não"}\n\nÁrea necessária estimada: ${specs.spaceRequired}. Gostaria de solicitar um orçamento!`)}`}
+              href={`https://wa.me/5511969343339?text=${encodeURIComponent(`Olá RaceBoy! Fiz um projeto de pista customizada no configurador com as especificações:\n- Fendas: ${lanes}\n- Traçado: ${shape.toUpperCase()}\n- Acabamento: ${finish.toUpperCase()}\n- Telemetria v4.0: ${addons.telemetry ? "Sim" : "Não"}\n- Faróis LED: ${addons.leds ? "Sim" : "Não"}\n- Fontes Individuais: ${addons.power ? "Sim" : "Não"}\n\nÁrea necessária estimada: ${specs.spaceRequired}. Gostaria de solicitar um orçamento!`)}`}
               target="_blank"
               rel="noreferrer"
               onClick={() => showToast(`Solicitação enviada! Configuração: ${lanes} Fendas | ${shape.toUpperCase()}`)}

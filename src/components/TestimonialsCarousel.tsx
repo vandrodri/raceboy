@@ -140,7 +140,7 @@ export default function TestimonialsCarousel() {
       `Olá RaceBoy! Estava lendo os depoimentos de clientes no site e gostaria de solicitar um orçamento para uma pista personalizada para mim!`
     );
     showToast("Redirecionando para o WhatsApp do projetista RaceBoy...");
-    window.open(`https://wa.me/5511994388829?text=${text}`, "_blank");
+    window.open(`https://wa.me/5511969343339?text=${text}`, "_blank");
   };
 
   return (

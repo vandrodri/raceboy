@@ -462,7 +462,7 @@ export default function App() {
                     <Facebook className="w-3 h-3" /> FACEBOOK
                   </a>
                   <a
-                    href="https://wa.me/5511994388829"
+                    href="https://wa.me/5511969343339"
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => showToast("Conectando com o suporte RaceBoy no WhatsApp!")}
@@ -889,7 +889,7 @@ export default function App() {
                   <span>•</span>
                   <a href="https://www.facebook.com/AUTOMODELISMORACEBOY/" target="_blank" rel="noreferrer" className="hover:text-neon-pink transition-all">FACEBOOK</a>
                   <span>•</span>
-                  <a href="https://wa.me/5511994388829" target="_blank" rel="noreferrer" onClick={() => showToast("Conectando com o mestre projetista no WhatsApp!")} className="hover:text-neon-green transition-all">FALE COM O PROJETISTA</a>
+                  <a href="https://wa.me/5511969343339" target="_blank" rel="noreferrer" onClick={() => showToast("Conectando com o mestre projetista no WhatsApp!")} className="hover:text-neon-green transition-all">FALE COM O PROJETISTA</a>
                 </div>
               </div>
             </footer>

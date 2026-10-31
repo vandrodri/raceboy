@@ -274,7 +274,7 @@ export default function HistoriaView() {
       `Olá RaceBoy! Fiquei interessado na foto "${photo.title}" (Ano: ${photo.year || "Não informado"}) da seção "${photo.category.toUpperCase()}" na sua página de 35 anos de História. Gostaria de saber mais sobre esse projeto!`
     );
     showToast("Redirecionando para o WhatsApp do projetista...");
-    window.open(`https://wa.me/5511994388829?text=${text}`, "_blank");
+    window.open(`https://wa.me/5511969343339?text=${text}`, "_blank");
   };
 
   // Category formatting labels

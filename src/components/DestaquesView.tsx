@@ -16,7 +16,7 @@ export default function DestaquesView({ siteConfig }: DestaquesViewProps) {
       "Olá! Vi o destaque da pista *Raceen* no site e gostaria de solicitar mais informações e um orçamento."
     );
     showToast("Solicitação enviada! Redirecionando para o WhatsApp...");
-    window.open(`https://wa.me/5511994388829?text=${text}`, "_blank");
+    window.open(`https://wa.me/5511969343339?text=${text}`, "_blank");
   };
 
   const handleMlcWhatsAppClick = () => {
@@ -24,7 +24,7 @@ export default function DestaquesView({ siteConfig }: DestaquesViewProps) {
       "Olá RaceBoy! Tenho interesse no projeto de estrutura em *Madeira Laminada Colada (MLC)* para minha pista. Gostaria de entender mais detalhes e valores!"
     );
     showToast("Solicitação enviada! Redirecionando para o WhatsApp...");
-    window.open(`https://wa.me/5511994388829?text=${text}`, "_blank");
+    window.open(`https://wa.me/5511969343339?text=${text}`, "_blank");
   };
 
   return (

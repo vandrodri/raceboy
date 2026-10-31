@@ -459,7 +459,7 @@ export default function ArViewerModal({ item, onClose }: ArViewerModalProps) {
       `Gostaria de validar o espaço disponível na minha residência/comércio e solicitar um orçamento!`
     );
     showToast("Abrindo WhatsApp do projetista RaceBoy...");
-    window.open(`https://wa.me/5511994388829?text=${message}`, "_blank");
+    window.open(`https://wa.me/5511969343339?text=${message}`, "_blank");
   };
 
   return (
