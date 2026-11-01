@@ -890,6 +890,10 @@ export default function App() {
                   <a href="https://www.facebook.com/AUTOMODELISMORACEBOY/" target="_blank" rel="noreferrer" className="hover:text-neon-pink transition-all">FACEBOOK</a>
                   <span>•</span>
                   <a href="https://wa.me/5511969343339" target="_blank" rel="noreferrer" onClick={() => showToast("Conectando com o mestre projetista no WhatsApp!")} className="hover:text-neon-green transition-all">FALE COM O PROJETISTA</a>
+                                    <span>•</span>
+                  <a href="/privacidade.html" className="hover:text-neon-blue transition-all">POLÍTICA DE PRIVACIDADE</a>
+                  <span>•</span>
+                  <button onClick={() => (window as any).rbCookiePrefs && (window as any).rbCookiePrefs()} className="hover:text-neon-blue transition-all cursor-pointer">PREFERÊNCIAS DE COOKIES</button>
                 </div>
               </div>
             </footer>
